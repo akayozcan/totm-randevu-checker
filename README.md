@@ -1,10 +1,10 @@
 # TOTM Randevu Kontrolcüsü
 
-Malatya İnönü Üniversitesi TOTM Hastanesi **Karaciğer Nakil Polikliniği** için randevu açıldığında otomatik olarak mail atan sistem. GitHub Actions üzerinde **30 dakikada bir** çalışır.
+Malatya İnönü Üniversitesi TOTM Hastanesi **Karaciğer Nakil Polikliniği** için randevu açıldığında otomatik olarak mail atan sistem. GitHub Actions üzerinde **10 dakikada bir** çalışır.
 
 ## Nasıl Çalışır
 
-1. GitHub Actions cron her 30 dakikada bir tetiklenir.
+1. GitHub Actions cron her 10 dakikada bir tetiklenir.
 2. Playwright (headless Chromium) [hasta portalına](https://totmhastaportali.mergentech.com.tr) gider, **üyesiz randevu** akışını dolaşır:
    - Portal → **"Randevu Al"**
    - → **"HASTANE RANDEVU"**
@@ -29,7 +29,7 @@ git branch -M main
 git push -u origin main
 ```
 
-> ⚠️ Repo **public** ise GitHub Actions tamamen ücretsiz. Private repo'da aylık 2000 dakika ücretsiz hakkınız var (30 dk'da bir × günde 48 × ~1 dk = ~1440 dk/ay — yine de yeterli).
+> ⚠️ Repo **public** ise GitHub Actions tamamen ücretsiz. 10 dk'da bir çalışma ayda ~4300 dk Actions kullanır; bu yüzden bu repo **public** olarak yayınlanmıştır (private'ta 2000 dk/ay ücretsiz hak aşılır).
 
 ### 2) Gmail App Password oluşturun
 
@@ -86,7 +86,7 @@ Site arayüzü değişirse veya ilk çalıştırmada akış kırılırsa:
 ## Sınırlar ve Notlar
 
 - Bu sistem sadece **müsaitliği** kontrol eder. Randevuyu **kesinleştirmek için kendiniz** TC kimlik ile siteye girip rezervasyonu tamamlamalısınız.
-- 30 dakikalık aralık makul. Daha sık çalıştırmak hem etik dışı hem de IP banlanmasına sebep olabilir.
+- 10 dakikalık aralık seçildi. Daha da sık çalıştırmak IP banlanmasına sebep olabilir.
 - GitHub Actions cron'u yüksek yük altındayken birkaç dakika gecikebilir; bu normaldir.
 - Site geçici olarak yavaşlarsa script `01-landing` veya `02-form` adımında timeout edebilir. Log'larda `99-error.png` artifact'ına bakın.
 
@@ -101,5 +101,5 @@ totm-randevu-checker/
 ├── README.md
 └── .github/
     └── workflows/
-        └── check.yml          # 30 dk cron + Actions runner
+        └── check.yml          # 10 dk cron + Actions runner
 ```
